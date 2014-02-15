@@ -26,7 +26,24 @@ public class State {
 
     public List<Integer> getLegalActions()
     {
-        return null;
+        ArrayList<Integer> datActionList = new ArrayList<Integer>();
+
+        if(col1[5] == '\u0000')
+            datActionList.add(1);
+        if(col2[5] == '\u0000')
+            datActionList.add(2);
+        if(col3[5] == '\u0000')
+            datActionList.add(3);
+        if(col4[5] == '\u0000')
+            datActionList.add(4);
+        if(col5[5] == '\u0000')
+            datActionList.add(5);
+        if(col6[5] == '\u0000')
+            datActionList.add(6);
+        if(col7[5] == '\u0000')
+            datActionList.add(7);
+
+        return datActionList;
     }
 
     public State successorState(int i)
