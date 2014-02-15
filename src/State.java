@@ -126,75 +126,103 @@ public class State {
 
     public boolean isGoal()
     {
-        NE();
-        E();
-        SE();
-        S();
-        SW();
-        W();
-        NW();
+        if(NE() == 4)
+        {
+           return true;
+        }
+        if(E() == 4)
+        {
+            return true;
+        }
+        if(SE() == 4)
+        {
+            return true;
+        }
+        if(S() == 4)
+        {
+            return true;
+        }
+        if(SW() == 4)
+        {
+            return true;
+        }
+        if(W() == 4)
+        {
+            return true;
+        }
+        if(NW() == 4)
+        {
+            return true;
+        }
+
+        if((E() + W()) == 4)
+        {
+            return true;
+        }
+        if((NE() + SW()) == 4)
+        {
+            return true;
+        }
+        if((SE() + NW()) == 4)
+        {
+            return true;
+        }
 
         return false;
     }
 
-    // NE
-    // E
-    // SE
-    // S
-    // SW
-    // W
-    // NW
 
 
 
 
-    private boolean NE()
+    private int NE()
+    {
+        // TODO: returna hersu margir pungtar eru í röð í NE
+        return 0;
+    }
+
+
+    private int E()
     {
 
-        return false;
+        return 0;
     }
 
 
-    private boolean E()
+    private int SE()
     {
 
-        return false;
+        return 0;
     }
 
 
-    private boolean SE()
+    private int S()
     {
 
-        return false;
+        return 0;
     }
 
 
-    private boolean S()
+    private int SW()
     {
 
-        return false;
+        return 0;
     }
 
 
-    private boolean SW()
+    private int W()
     {
 
-        return false;
+        return 0;
     }
 
 
-    private boolean W()
+    private int NW()
     {
 
-        return false;
+        return 0;
     }
 
-
-    private boolean NW()
-    {
-
-        return false;
-    }
 
 
 
