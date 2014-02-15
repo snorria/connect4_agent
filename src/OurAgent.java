@@ -73,7 +73,7 @@ public class OurAgent implements Agent
 
         if ( s.isGoal() || depth <= 0 )
         {
-            return evaluate(s);
+            return s.evaluate();
         }
 
         int bestValue = Integer.MIN_VALUE;
@@ -106,11 +106,7 @@ public class OurAgent implements Agent
         return bestValue;
     }
 
-    private int evaluate(State s)
-    {
 
-        return 1; // TODO: skila random tölu
-    }
 
 
 

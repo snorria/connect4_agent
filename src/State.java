@@ -225,7 +225,11 @@ public class State {
 
 
 
+    public int evaluate()
+    {
 
+        return 1; // TODO: skila random tölu
+    }
 
 
 }
