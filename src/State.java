@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public class State {
     char[] col6 = new char[6];
     char[] col7 = new char[6];
     boolean currentPlayer = true;
+    int lastMove;
 
     public State()
     {
@@ -31,6 +33,7 @@ public class State {
     {
         State newState = new State();
         newState.currentPlayer = !newState.currentPlayer;
+        newState.lastMove = i;
         newState.setCol(i,getCol(i).clone());
         for (int j = 0; j < newState.getCol(i).length; j++) {
             if(newState.getCol(i)[j] == '\u0000')
@@ -47,6 +50,20 @@ public class State {
         }
         return newState;
     }
+
+
+
+    public List<State> successorStates()
+    {
+        ArrayList<State> states = new ArrayList<State>();
+        for(int action : getLegalActions())
+        {
+            states.add(successorState(action));
+        }
+        return states;
+    }
+
+
 
     public boolean isGoal()
     {

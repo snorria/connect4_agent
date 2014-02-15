@@ -15,10 +15,13 @@ public class OurAgent implements Agent
     private int playclock;
     private boolean myTurn;
     private State currentState;
+    private static long startTime;
+    private static int MAX_TIME;
     /*
         init(String role, int playclock) is called once before you have to select the first action. Use it to initialize the agent. role is either "WHITE" or "RED" and playclock is the number of seconds after which nextAction must return.
     */
     public void init(String role, int playclock) {
+        this.MAX_TIME = (playclock * 1000000000) - 20000;
         this.role = role;
         this.playclock = playclock;
         myTurn = !role.equals("WHITE");
@@ -33,13 +36,83 @@ public class OurAgent implements Agent
         // TODO: 1. update your internal world model according to the action that was just executed
         currentState = currentState.successorState(lastDrop);
         myTurn = !myTurn;
-        // TODO: 2. run alpha-beta search to determine the best move
 
         if (myTurn) {
-            return "(DROP " + (random.nextInt(7)+1) + ")";
-        } else {
+            // TODO: 2. run alpha-beta search to determine the best move
+            int move = 0;
+            startTime = System.nanoTime();
+
+            try
+            {
+                int depth = 1;
+                while (true)
+                {
+                    move = AlphaBetaNegaMax(depth++, currentState, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return "(DROP " + move + ")";
+        }
+        else
+        {
             return "NOOP";
         }
     }
+
+    private static int bestmove;
+    private int AlphaBetaNegaMax (int depth, State s, int alpha, int beta, boolean first) throws Exception
+    {
+        if((System.nanoTime() - startTime) > MAX_TIME)
+        {
+            throw new Exception();
+        }
+
+        if ( s.isGoal() || depth <= 0 )
+        {
+            return evaluate(s);
+        }
+
+        int bestValue = Integer.MIN_VALUE;
+
+        for(State successor : s.successorStates())
+        {
+            int value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
+
+            if(first)
+            {
+                if(value > bestValue)
+                {
+                    bestmove = successor.lastMove;
+                }
+            }
+
+            bestValue = Math.max(value, bestValue);
+
+            if ( bestValue > alpha )
+            {
+                alpha = bestValue; //adjust the lower bound
+                if ( alpha >= beta ) break; //beta cutoff
+            }
+        }
+
+        if(first)
+        {
+            return bestmove;
+        }
+        return bestValue;
+    }
+
+    private int evaluate(State s)
+    {
+
+        return 1; // TODO: skila random tölu
+    }
+
+
+
 
 }
