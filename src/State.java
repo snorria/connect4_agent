@@ -18,6 +18,7 @@ public class State {
     char[] col7 = new char[6];
     boolean currentPlayer = true;
     int lastMove;
+    int lastMoveY;
 
     public State()
     {
@@ -55,17 +56,23 @@ public class State {
         for (int j = 0; j < newState.getCol(i).length; j++) {
             if(newState.getCol(i)[j] == '\u0000')
             {
-                if(currentPlayer)
-                {
-                    newState.getCol(i)[j] = 'w';
-                }
-                else
-                {
-                    newState.getCol(i)[j] = 'b';
-                }
+                newState.getCol(i)[j] = currentPlayerChar();
+                newState.lastMoveY = j;
             }
         }
         return newState;
+    }
+
+    public char currentPlayerChar()
+    {
+        if(currentPlayer)
+        {
+            return 'w';
+        }
+        else
+        {
+            return 'b';
+        }
     }
 
 
@@ -78,13 +85,6 @@ public class State {
             states.add(successorState(action));
         }
         return states;
-    }
-
-
-
-    public boolean isGoal()
-    {
-        return false;
     }
 
     public char[] getCol(int i)
@@ -121,4 +121,90 @@ public class State {
                 break;
         }
     }
+
+
+
+    public boolean isGoal()
+    {
+        N();
+        NE();
+        E();
+        SE();
+        S();
+        SW();
+        W();
+        NW();
+
+        return false;
+    }
+
+    // N
+    // NE
+    // E
+    // SE
+    // S
+    // SW
+    // W
+    // NW
+
+
+    private boolean N()
+    {
+
+        return false;
+    }
+
+
+    private boolean NE()
+    {
+
+        return false;
+    }
+
+
+    private boolean E()
+    {
+
+        return false;
+    }
+
+
+    private boolean SE()
+    {
+
+        return false;
+    }
+
+
+    private boolean S()
+    {
+
+        return false;
+    }
+
+
+    private boolean SW()
+    {
+
+        return false;
+    }
+
+
+    private boolean W()
+    {
+
+        return false;
+    }
+
+
+    private boolean NW()
+    {
+
+        return false;
+    }
+
+
+
+
+
 }
