@@ -126,7 +126,6 @@ public class State {
 
     public boolean isGoal()
     {
-        N();
         NE();
         E();
         SE();
@@ -138,7 +137,6 @@ public class State {
         return false;
     }
 
-    // N
     // NE
     // E
     // SE
@@ -148,11 +146,6 @@ public class State {
     // NW
 
 
-    private boolean N()
-    {
-
-        return false;
-    }
 
 
     private boolean NE()
