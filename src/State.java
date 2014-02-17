@@ -75,6 +75,17 @@ public class State {
         }
     }
 
+    public char lastPlayerChar()
+    {
+        if(currentPlayer)
+        {
+            return 'b';
+        }
+        else
+        {
+            return 'w';
+        }
+    }
 
 
     public List<State> successorStates()
@@ -126,44 +137,19 @@ public class State {
 
     public boolean isGoal()
     {
-        if(NE() == 4)
-        {
-           return true;
-        }
-        if(E() == 4)
+        if((E() + W()) >= 4)
         {
             return true;
         }
-        if(SE() == 4)
+        if((NE() + SW()) >= 4)
+        {
+            return true;
+        }
+        if((SE() + NW()) >= 4)
         {
             return true;
         }
         if(S() == 4)
-        {
-            return true;
-        }
-        if(SW() == 4)
-        {
-            return true;
-        }
-        if(W() == 4)
-        {
-            return true;
-        }
-        if(NW() == 4)
-        {
-            return true;
-        }
-
-        if((E() + W()) == 4)
-        {
-            return true;
-        }
-        if((NE() + SW()) == 4)
-        {
-            return true;
-        }
-        if((SE() + NW()) == 4)
         {
             return true;
         }
@@ -177,49 +163,91 @@ public class State {
 
     private int NE()
     {
-        // TODO: returna hersu margir pungtar eru í röð í NE
+        int count = 0;
+        for(int i = 1; lastMove+i<= 7 && lastMoveY+i <= 5;i++){
+            if(getCol(lastMove+i)[lastMoveY+i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
 
     private int E()
     {
-
+        int count = 0;
+        for(int i = 1; lastMove+i<= 7;i++){
+            if(getCol(lastMove+i)[lastMoveY] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
 
     private int SE()
     {
-
+        int count = 0;
+        for(int i = 1; lastMove+i<= 7 && lastMoveY-i >= 0;i++){
+            if(getCol(lastMove+i)[lastMoveY-i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
 
     private int S()
     {
-
+        int count = 0;
+        for(int i = 1; lastMoveY-i>= 0;i++){
+            if(getCol(lastMove)[lastMoveY-i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
 
     private int SW()
     {
-
+        int count = 0;
+        for(int i = 1; lastMove-i>= 1 && lastMoveY-i >= 0;i++){
+            if(getCol(lastMove-i)[lastMoveY-i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
 
     private int W()
     {
-
+        int count = 0;
+        for(int i = 1; lastMove-i>= 0;i++){
+            if(getCol(lastMove-i)[lastMoveY] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
 
     private int NW()
     {
-
+        int count = 0;
+        for(int i = 1; lastMove-i>= 1 && lastMoveY+i <= 5;i++){
+            if(getCol(lastMove-i)[lastMoveY+i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
         return 0;
     }
 
