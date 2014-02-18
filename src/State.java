@@ -346,13 +346,205 @@ public class State {
         return points;
     }
 
-    public int evaluate()
+/*    public int evaluate()
     {
         int valueTown = 0;
 
         valueTown = points(NWSE())+points(NESW())+points(S())+points(EW());//Math.max(Math.max(points(NESW()),points(NWSE())),Math.max(points(S()),points(EW())));
 
         return valueTown;
+    }*/
+
+    public int evaluate()
+    {
+        if(isGoal())
+            return Integer.MIN_VALUE;
+
+        int trump = 0;
+        //col1
+        if(col1[0] == currentPlayerChar())
+            trump+=3;
+        else
+            trump-=3;
+        if(col1[1] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+        if(col1[2] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+        if(col1[3] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+        if(col1[4] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+        if(col1[5] == currentPlayerChar())
+            trump+=3;
+        else
+            trump-=3;
+
+        //col2
+        if(col2[0] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+        if(col2[1] == currentPlayerChar())
+            trump+=6;
+        else
+            trump-=6;
+        if(col2[2] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col2[3] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col2[4] == currentPlayerChar())
+            trump+=6;
+        else
+            trump-=6;
+        if(col2[5] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+
+        //col3
+        if(col3[0] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+        if(col3[1] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col3[2] == currentPlayerChar())
+            trump+=11;
+        else
+            trump-=11;
+        if(col3[3] == currentPlayerChar())
+            trump+=11;
+        else
+            trump-=11;
+        if(col3[4] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col3[5] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+
+        //col4
+        if(col4[0] == currentPlayerChar())
+            trump+=7;
+        else
+            trump-=7;
+        if(col4[1] == currentPlayerChar())
+            trump+=10;
+        else
+            trump-=10;
+        if(col4[2] == currentPlayerChar())
+            trump+=13;
+        else
+            trump-=13;
+        if(col4[3] == currentPlayerChar())
+            trump+=13;
+        else
+            trump-=13;
+        if(col4[4] == currentPlayerChar())
+            trump+=10;
+        else
+            trump-=10;
+        if(col4[5] == currentPlayerChar())
+            trump+=7;
+        else
+            trump-=7;
+
+        //col5
+        if(col5[0] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+        if(col5[1] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col5[2] == currentPlayerChar())
+            trump+=11;
+        else
+            trump-=11;
+        if(col5[3] == currentPlayerChar())
+            trump+=11;
+        else
+            trump-=11;
+        if(col5[4] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col5[5] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+
+
+        //col6
+        if(col6[0] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+        if(col6[1] == currentPlayerChar())
+            trump+=6;
+        else
+            trump-=6;
+        if(col6[2] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col6[3] == currentPlayerChar())
+            trump+=8;
+        else
+            trump-=8;
+        if(col6[4] == currentPlayerChar())
+            trump+=6;
+        else
+            trump-=6;
+        if(col6[5] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+
+        //col7
+        if(col7[0] == currentPlayerChar())
+            trump+=3;
+        else
+            trump-=3;
+        if(col7[1] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+        if(col7[2] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+        if(col7[3] == currentPlayerChar())
+            trump+=5;
+        else
+            trump-=5;
+        if(col7[4] == currentPlayerChar())
+            trump+=4;
+        else
+            trump-=4;
+        if(col7[5] == currentPlayerChar())
+            trump+=3;
+        else
+            trump-=3;
+
+        return trump;
     }
 
     public String toString()
