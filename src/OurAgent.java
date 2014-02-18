@@ -52,7 +52,7 @@ public class OurAgent implements Agent
                 while (true)
                 {
                     System.out.println("NEGAMAX START, Depth:" + depth);
-                    move = AlphaBetaNegaMax(depth, currentState, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                    move = AlphaBetaNegaMax(depth, currentState, -Integer.MAX_VALUE, Integer.MAX_VALUE, true);
                     System.out.println("NEGAMAX END, Depth:" + depth);
                     depth++;
                 }
@@ -83,10 +83,10 @@ public class OurAgent implements Agent
 
         if ( s.isGoal() || depth <= 0 )
         {
-            return s.evaluate();
+                return s.evaluate();
         }
 
-        int bestValue = Integer.MIN_VALUE;
+        int bestValue = -Integer.MAX_VALUE;
 
         for(State successor : s.successorStates())
         {

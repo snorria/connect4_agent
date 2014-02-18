@@ -357,8 +357,9 @@ public class State {
 
     public int evaluate()
     {
+        //Using IBEF's weighting of squares, see: http://www.hiof.no/neted/upload/attachment/site/group12/Martin_Stenmark_Synthesizing_Board_Evaluation_Functions_for_Connect4_using_Machine_Learning_Techniques.pdf
         if(isGoal())
-            return Integer.MIN_VALUE;
+            return -Integer.MAX_VALUE;
 
         int trump = 0;
         //col1
