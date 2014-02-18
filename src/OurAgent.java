@@ -72,7 +72,7 @@ public class OurAgent implements Agent
     private int AlphaBetaNegaMax (int depth, State s, int alpha, int beta, boolean first) throws TimeOverExeption
     {
         long timeNow = System.nanoTime();
-        System.out.println("TIME: "+(timeNow - startTime) +" > " + MAX_TIME );
+        //System.out.println("TIME: "+(timeNow - startTime) +" > " + MAX_TIME );
         if((timeNow - startTime) > MAX_TIME)
         {
             throw new TimeOverExeption("Time Over!");

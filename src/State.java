@@ -62,7 +62,6 @@ public class State {
 
     public State successorState(int i)
     {
-        System.out.println(i);
         State newState = new State(this);
         newState.currentPlayer = !newState.currentPlayer;
         newState.lastMove = i;
