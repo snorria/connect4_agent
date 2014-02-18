@@ -29,7 +29,8 @@ public class OurAgent implements Agent
         currentState = new State();
         currentState.currentPlayer = myTurn;
     }
-
+    //Volibear are state expansions.
+    private static int datvolibear = 0;
     // lastDrop is 0 for the first call of nextAction (no action has been executed),
     // otherwise it is a number n with 0<n<8 indicating the column that the last piece was dropped in by the player whose turn it was
     public String nextAction(int lastDrop) {
@@ -51,9 +52,9 @@ public class OurAgent implements Agent
                 int depth = 1;
                 while (true)
                 {
-                    System.out.println("NEGAMAX START, Depth:" + depth);
+                    //System.out.println("NEGAMAX START, Depth:" + depth);
                     move = AlphaBetaNegaMax(depth, currentState, -Integer.MAX_VALUE, Integer.MAX_VALUE, true);
-                    System.out.println("NEGAMAX END, Depth:" + depth);
+                    //System.out.println("NEGAMAX END, Depth:" + depth);
                     depth++;
                 }
             }
@@ -61,6 +62,8 @@ public class OurAgent implements Agent
             {
                 System.out.println("Exeption: " + e.getMessage() + "\nMove made: "+ move);
             }
+            System.out.println("State Expansions:"+datvolibear);
+            datvolibear = 0;
             System.out.println(currentState.toString());
             return "(DROP " + move + ")";
         }
@@ -72,6 +75,7 @@ public class OurAgent implements Agent
     }
 
     private static int bestmove;
+    //Negamax as shown in the slides from Stephan, plus we added a variable so we can make the first iteration return a move instead of a value.
     private int AlphaBetaNegaMax (int depth, State s, int alpha, int beta, boolean first) throws TimeOverExeption
     {
         long timeNow = System.currentTimeMillis();
@@ -90,6 +94,7 @@ public class OurAgent implements Agent
 
         for(State successor : s.successorStates())
         {
+            ++datvolibear;
             int value;
             value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
 
@@ -115,7 +120,7 @@ public class OurAgent implements Agent
 
         if(first)
         {
-            System.out.println("*************************************Best move is: " + bestmove);
+            //System.out.println("*************************************Best move is: " + bestmove);
             return bestmove;
         }
         return bestValue;

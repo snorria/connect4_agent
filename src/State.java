@@ -9,6 +9,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class State {
+    //These are split into many arrays so that we can use the columns from the last state without making a new array.
     char[] col1 = new char[6];
     char[] col2 = new char[6];
     char[] col3 = new char[6];
@@ -17,13 +18,14 @@ public class State {
     char[] col6 = new char[6];
     char[] col7 = new char[6];
     boolean currentPlayer = true;
-    int lastMove;
-    int lastMoveY;
+    int lastMove; //the column that was dropped into, last move...
+    int lastMoveY; //the row the disc of the last move landed in.
 
     public State()
     {
 
     }
+    //Copy constructor.
     public State(State copiedState)
     {
         col1 = copiedState.col1;
@@ -38,6 +40,7 @@ public class State {
         lastMoveY = copiedState.lastMoveY;
     }
 
+    //Simply returns actions that are available, checks if the arrays are full.
     public List<Integer> getLegalActions()
     {
         ArrayList<Integer> datActionList = new ArrayList<Integer>();
@@ -62,9 +65,12 @@ public class State {
 
     public State successorState(int i)
     {
+        //Copies the last state.
         State newState = new State(this);
+        //Sets the changes of the new state.
         newState.currentPlayer = !newState.currentPlayer;
         newState.lastMove = i;
+        //Makes a cloned char[] from the old column, so that we can change this column and it doesn't change the last state.
         char[] newCol = getCol(i).clone();
         newState.setCol(i,newCol);
         for (int j = 0; j < newState.getCol(i).length; j++) {
@@ -78,6 +84,7 @@ public class State {
         return newState;
     }
 
+    //Returns the char used for current player, w for white, b for black(red)
     public char currentPlayerChar()
     {
         if(currentPlayer)
@@ -89,7 +96,7 @@ public class State {
             return 'b';
         }
     }
-
+    //Opposite of currentPlayerChar
     public char lastPlayerChar()
     {
         if(currentPlayer)
@@ -102,7 +109,7 @@ public class State {
         }
     }
 
-
+    //Returns successor states, uses the getLegalActions and successorState(action) functions.
     public List<State> successorStates()
     {
         ArrayList<State> states = new ArrayList<State>();
@@ -112,7 +119,7 @@ public class State {
         }
         return states;
     }
-
+    //Returns column number i
     public char[] getCol(int i)
     {
         switch(i)
@@ -127,6 +134,7 @@ public class State {
             default: return null;
         }
     }
+    //Sets column number i
     public void setCol(int i,char[] newcol)
     {
         switch(i)
@@ -149,7 +157,7 @@ public class State {
     }
 
 
-
+    //Checks if this is a goal/terminal state.
     public boolean isGoal()
     {
         if(EW() >= 4)
@@ -174,7 +182,7 @@ public class State {
 
 
 
-
+    //Counts how many discs are in a row from the lastmove, in the row NE -> SW
     private int NESW()
     {
         int count = 1;
@@ -192,6 +200,8 @@ public class State {
         }
         return count;
     }
+
+    //Counts how many discs are in a row from the lastmove, in the row South
     private int S()
     {
         int count = 1;
@@ -203,6 +213,7 @@ public class State {
         }
         return count;
     }
+    //Counts how many discs are in a row from the lastmove, in the row E -> W
     private int EW()
     {
         int count = 1;
@@ -220,6 +231,8 @@ public class State {
         }
         return count;
     }
+
+    //Counts how many discs are in a row from the lastmove, in the row NW -> SE
     private int NWSE()
     {
         int count = 1;
@@ -238,97 +251,7 @@ public class State {
         return count;
     }
 
-/*
-    private int NE()
-    {
-        int count = 0;
-        for(int i = 1; lastMove+i<= 7 && lastMoveY+i <= 5;i++){
-            if(getCol(lastMove+i)[lastMoveY+i] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-
-
-    private int E()
-    {
-        int count = 0;
-        for(int i = 1; lastMove+i<= 7;i++){
-            if(getCol(lastMove+i)[lastMoveY] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-
-
-    private int SE()
-    {
-        int count = 0;
-        for(int i = 1; lastMove+i<= 7 && lastMoveY-i >= 0;i++){
-            if(getCol(lastMove+i)[lastMoveY-i] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-
-
-    private int S()
-    {
-        int count = 0;
-        for(int i = 1; lastMoveY-i>= 0;i++){
-            if(getCol(lastMove)[lastMoveY-i] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-
-
-    private int SW()
-    {
-        int count = 0;
-        for(int i = 1; lastMove-i>= 1 && lastMoveY-i >= 0;i++){
-            if(getCol(lastMove-i)[lastMoveY-i] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-
-
-    private int W()
-    {
-        int count = 0;
-        for(int i = 1; lastMove-i>= 0;i++){
-            if(getCol(lastMove-i)[lastMoveY] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-
-
-    private int NW()
-    {
-        int count = 0;
-        for(int i = 1; lastMove-i>= 1 && lastMoveY+i <= 5;i++){
-            if(getCol(lastMove-i)[lastMoveY+i] == lastPlayerChar())
-                count++;
-            else
-                return count;
-        }
-        return 0;
-    }
-*/
+    //This was used in our first evaluate function.
     private int points(int count)
     {
         int points = 0;
@@ -346,6 +269,7 @@ public class State {
         return points;
     }
 
+    //Our terrible evaluate function.
 /*    public int evaluate()
     {
         int valueTown = 0;
@@ -355,6 +279,7 @@ public class State {
         return valueTown;
     }*/
 
+    //Our evaluate function, simply adds up the values of the squares and returns it.
     public int evaluate()
     {
         //Using IBEF's weighting of squares, see: http://www.hiof.no/neted/upload/attachment/site/group12/Martin_Stenmark_Synthesizing_Board_Evaluation_Functions_for_Connect4_using_Machine_Learning_Techniques.pdf
@@ -365,189 +290,190 @@ public class State {
         //col1
         if(col1[0] == currentPlayerChar())
             trump+=3;
-        else
+        else if(col1[0] == lastPlayerChar())
             trump-=3;
         if(col1[1] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col1[1] == lastPlayerChar())
             trump-=4;
         if(col1[2] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col1[2] == lastPlayerChar())
             trump-=5;
         if(col1[3] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col1[3] == lastPlayerChar())
             trump-=5;
         if(col1[4] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col1[4] == lastPlayerChar())
             trump-=4;
         if(col1[5] == currentPlayerChar())
             trump+=3;
-        else
+        else if(col1[5] == lastPlayerChar())
             trump-=3;
 
         //col2
         if(col2[0] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col2[0] == lastPlayerChar())
             trump-=4;
         if(col2[1] == currentPlayerChar())
             trump+=6;
-        else
+        else if(col2[1] == lastPlayerChar())
             trump-=6;
         if(col2[2] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col2[2] == lastPlayerChar())
             trump-=8;
         if(col2[3] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col2[3] == lastPlayerChar())
             trump-=8;
         if(col2[4] == currentPlayerChar())
             trump+=6;
-        else
+        else if(col2[4] == lastPlayerChar())
             trump-=6;
         if(col2[5] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col2[5] == lastPlayerChar())
             trump-=4;
 
         //col3
         if(col3[0] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col3[0] == lastPlayerChar())
             trump-=5;
         if(col3[1] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col3[1] == lastPlayerChar())
             trump-=8;
         if(col3[2] == currentPlayerChar())
             trump+=11;
-        else
+        else if(col3[2] == lastPlayerChar())
             trump-=11;
         if(col3[3] == currentPlayerChar())
             trump+=11;
-        else
+        else if(col3[3] == lastPlayerChar())
             trump-=11;
         if(col3[4] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col3[4] == lastPlayerChar())
             trump-=8;
         if(col3[5] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col3[5] == lastPlayerChar())
             trump-=5;
 
         //col4
         if(col4[0] == currentPlayerChar())
             trump+=7;
-        else
+        else if(col4[0] == lastPlayerChar())
             trump-=7;
         if(col4[1] == currentPlayerChar())
             trump+=10;
-        else
+        else if(col4[1] == lastPlayerChar())
             trump-=10;
         if(col4[2] == currentPlayerChar())
             trump+=13;
-        else
+        else if(col4[2] == lastPlayerChar())
             trump-=13;
         if(col4[3] == currentPlayerChar())
             trump+=13;
-        else
+        else if(col4[3] == lastPlayerChar())
             trump-=13;
         if(col4[4] == currentPlayerChar())
             trump+=10;
-        else
+        else if(col4[4] == lastPlayerChar())
             trump-=10;
         if(col4[5] == currentPlayerChar())
             trump+=7;
-        else
+        else if(col4[5] == lastPlayerChar())
             trump-=7;
 
         //col5
         if(col5[0] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col5[0] == lastPlayerChar())
             trump-=5;
         if(col5[1] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col5[1] == lastPlayerChar())
             trump-=8;
         if(col5[2] == currentPlayerChar())
             trump+=11;
-        else
+        else if(col5[2] == lastPlayerChar())
             trump-=11;
         if(col5[3] == currentPlayerChar())
             trump+=11;
-        else
+        else if(col5[3] == lastPlayerChar())
             trump-=11;
         if(col5[4] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col5[4] == lastPlayerChar())
             trump-=8;
         if(col5[5] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col5[5] == lastPlayerChar())
             trump-=5;
 
 
         //col6
         if(col6[0] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col6[0] == lastPlayerChar())
             trump-=4;
         if(col6[1] == currentPlayerChar())
             trump+=6;
-        else
+        else if(col6[1] == lastPlayerChar())
             trump-=6;
         if(col6[2] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col6[2] == lastPlayerChar())
             trump-=8;
         if(col6[3] == currentPlayerChar())
             trump+=8;
-        else
+        else if(col6[3] == lastPlayerChar())
             trump-=8;
         if(col6[4] == currentPlayerChar())
             trump+=6;
-        else
+        else if(col6[4] == lastPlayerChar())
             trump-=6;
         if(col6[5] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col6[5] == lastPlayerChar())
             trump-=4;
 
         //col7
         if(col7[0] == currentPlayerChar())
             trump+=3;
-        else
+        else if(col7[0] == lastPlayerChar())
             trump-=3;
         if(col7[1] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col7[1] == lastPlayerChar())
             trump-=4;
         if(col7[2] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col7[2] == lastPlayerChar())
             trump-=5;
         if(col7[3] == currentPlayerChar())
             trump+=5;
-        else
+        else if(col7[3] == lastPlayerChar())
             trump-=5;
         if(col7[4] == currentPlayerChar())
             trump+=4;
-        else
+        else if(col7[4] == lastPlayerChar())
             trump-=4;
         if(col7[5] == currentPlayerChar())
             trump+=3;
-        else
+        else if(col7[5] == lastPlayerChar())
             trump-=3;
 
         return trump;
     }
 
+    //ToString, to be able to debug our code :'(
     public String toString()
     {
         String s = "";
