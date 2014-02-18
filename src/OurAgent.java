@@ -87,7 +87,12 @@ public class OurAgent implements Agent
 
         for(State successor : s.successorStates())
         {
-            int value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
+            int value;
+            if (first)
+                value = AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
+            else
+                value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
+
 
             if(first)
             {
