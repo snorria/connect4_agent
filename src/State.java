@@ -348,7 +348,7 @@ public class State {
     {
         int valueTown = 0;
 
-        valueTown = points(NW())+points(W())+points(SW())+points(S())+points(SE())+points(E())+points(NE());
+        valueTown = Math.max(Math.max(points(NESW())));
 
         return valueTown;
     }
