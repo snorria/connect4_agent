@@ -213,7 +213,7 @@ public class State {
             else
                 break;
         }
-        for(int i = 1; lastMove-i>= 0;i++){
+        for(int i = 1; lastMove-i>= 1;i++){
             if(getCol(lastMove-i)[lastMoveY] == lastPlayerChar())
                 count++;
             else
@@ -332,23 +332,26 @@ public class State {
 */
     private int points(int count)
     {
+        int points = 0;
+        if(lastMove==4)
+            points+=2;
         if(count == 1)
-            return 2;
+            points += 1;
         if(count == 2)
-            return 4;
+            points += 4;
         if(count == 3)
-            return 8;
+            points += 8;
         if(count >= 4)
-            return Integer.MAX_VALUE;
+            return 100000;
 
-        return 0;
+        return points;
     }
 
     public int evaluate()
     {
         int valueTown = 0;
 
-        valueTown = Math.max(Math.max(points(NESW()),points(NWSE())),Math.max(points(S()),points(EW())));
+        valueTown = points(NWSE())+points(NESW())+points(S())+points(EW());//Math.max(Math.max(points(NESW()),points(NWSE())),Math.max(points(S()),points(EW())));
 
         return valueTown;
     }
