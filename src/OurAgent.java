@@ -24,7 +24,7 @@ public class OurAgent implements Agent
         this.MAX_TIME = (playclock * 1000000000) - 20000;
         this.role = role;
         this.playclock = playclock;
-        myTurn = !role.equals("WHITE");
+        myTurn = role.equals("WHITE");
         //Initialization
         currentState = new State();
         currentState.currentPlayer = myTurn;
@@ -34,9 +34,13 @@ public class OurAgent implements Agent
     // otherwise it is a number n with 0<n<8 indicating the column that the last piece was dropped in by the player whose turn it was
     public String nextAction(int lastDrop) {
         // TODO: 1. update your internal world model according to the action that was just executed
-        currentState = currentState.successorState(lastDrop);
-        myTurn = !myTurn;
-
+        System.out.println(currentState.toString());
+        if(lastDrop != 0)
+        {
+            State drasl = currentState.successorState(lastDrop);
+            currentState = drasl;
+            myTurn = !myTurn;
+        }
         if (myTurn) {
             // TODO: 2. run alpha-beta search to determine the best move
             int move = 0;
@@ -47,12 +51,13 @@ public class OurAgent implements Agent
                 int depth = 1;
                 while (true)
                 {
-                    move = AlphaBetaNegaMax(depth++, currentState, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                    move = AlphaBetaNegaMax(depth, currentState, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+                    depth++;
                 }
             }
             catch (Exception e)
             {
-
+                System.out.println("Move made: "+ move);
             }
 
             return "(DROP " + move + ")";
@@ -66,7 +71,9 @@ public class OurAgent implements Agent
     private static int bestmove;
     private int AlphaBetaNegaMax (int depth, State s, int alpha, int beta, boolean first) throws Exception
     {
-        if((System.nanoTime() - startTime) > MAX_TIME)
+        long timeNow = System.nanoTime();
+        System.out.println("TIME: "+(timeNow - startTime) +" > " + MAX_TIME );
+        if((timeNow - startTime) > MAX_TIME)
         {
             throw new Exception();
         }

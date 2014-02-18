@@ -24,6 +24,19 @@ public class State {
     {
 
     }
+    public State(State copiedState)
+    {
+        col1 = copiedState.col1;
+        col2 = copiedState.col2;
+        col3 = copiedState.col3;
+        col4 = copiedState.col4;
+        col5 = copiedState.col5;
+        col6 = copiedState.col6;
+        col7 = copiedState.col7;
+        currentPlayer = copiedState.currentPlayer;
+        lastMove = copiedState.lastMove;
+        lastMoveY = copiedState.lastMoveY;
+    }
 
     public List<Integer> getLegalActions()
     {
@@ -49,15 +62,18 @@ public class State {
 
     public State successorState(int i)
     {
-        State newState = new State();
+        System.out.println(i);
+        State newState = new State(this);
         newState.currentPlayer = !newState.currentPlayer;
         newState.lastMove = i;
-        newState.setCol(i,getCol(i).clone());
+        char[] newCol = getCol(i).clone();
+        newState.setCol(i,newCol);
         for (int j = 0; j < newState.getCol(i).length; j++) {
             if(newState.getCol(i)[j] == '\u0000')
             {
                 newState.getCol(i)[j] = currentPlayerChar();
                 newState.lastMoveY = j;
+                return newState;
             }
         }
         return newState;
@@ -251,13 +267,36 @@ public class State {
         return 0;
     }
 
+    private int points(int count)
+    {
+        if(count == 1)
+            return 2;
+        if(count == 2)
+            return 4;
+        if(count == 3)
+            return 8;
+        if(count >= 4)
+            return Integer.MAX_VALUE;
 
+        return 0;
+    }
 
     public int evaluate()
     {
+        int valueTown = 0;
 
-        return 1; // TODO: skila random tölu
+        valueTown = points(NW())+points(W())+points(SW())+points(S())+points(SE())+points(E())+points(NE());
+
+        return valueTown;
     }
 
-
+    public String toString()
+    {
+        String s = "";
+        for (int i = 5; i>= 0; i--)
+        {
+            s+=i+": "+"["+getCol(1)[i]+"]"+"["+getCol(2)[i]+"]"+"["+getCol(3)[i]+"]"+"["+getCol(4)[i]+"]"+"["+getCol(5)[i]+"]"+"["+getCol(6)[i]+"]"+"["+getCol(7)[i]+"]\n";
+        }
+        return s;
+    }
 }
