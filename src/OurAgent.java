@@ -94,7 +94,7 @@ public class OurAgent implements Agent
             value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
 
 
-            System.out.println("Depth: " + depth + " Move: " + successor.lastMove + " Value: " + value + " Player: " + successor.currentPlayerChar());
+            //System.out.println("Depth: " + depth + " Move: " + successor.lastMove + " Value: " + value + " Player: " + successor.currentPlayerChar());
 
             if(first)
             {
