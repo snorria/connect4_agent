@@ -333,7 +333,7 @@ public class State {
     {
         int points = 0;
         if(lastMove==4)
-            points+=2;
+            points+=3;
         if(count == 1)
             points += 1;
         if(count == 2)

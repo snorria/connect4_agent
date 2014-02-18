@@ -82,7 +82,11 @@ public class OurAgent implements Agent
 
         if ( s.isGoal() || depth <= 0 )
         {
-            return s.evaluate();
+            if(!s.currentPlayer){
+                return s.evaluate();
+            }
+            else
+                return -s.evaluate();
         }
 
         int bestValue = Integer.MIN_VALUE;
@@ -90,13 +94,13 @@ public class OurAgent implements Agent
         for(State successor : s.successorStates())
         {
             int value;
-            if (first)
-                value = AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
-            else
-                value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
+            //if (first)
+            //    value = AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
+            //else
+            value = -AlphaBetaNegaMax((depth - 1), successor, -beta, -alpha, false); //Note: switch and negate bounds
 
 
-            System.out.println("Depth: " + depth + " Move: " + successor.lastMove + " Value: " + value);
+            //System.out.println("Depth: " + depth + " Move: " + successor.lastMove + " Value: " + value);
 
             if(first)
             {
@@ -111,7 +115,7 @@ public class OurAgent implements Agent
             if ( bestValue > alpha )
             {
                 alpha = bestValue; //adjust the lower bound
-                if ( alpha >= beta ) break; //beta cutoff
+                //if ( alpha >= beta ) break; //beta cutoff
             }
         }
 
