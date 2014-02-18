@@ -153,15 +153,15 @@ public class State {
 
     public boolean isGoal()
     {
-        if((E() + W()) >= 4)
+        if(EW() >= 4)
         {
             return true;
         }
-        if((NE() + SW()) >= 4)
+        if(NESW() >= 4)
         {
             return true;
         }
-        if((SE() + NW()) >= 4)
+        if(NWSE() >= 4)
         {
             return true;
         }
@@ -176,7 +176,70 @@ public class State {
 
 
 
+    private int NESW()
+    {
+        int count = 1;
+        for(int i = 1; lastMove+i<= 7 && lastMoveY+i <= 5;i++){
+            if(getCol(lastMove+i)[lastMoveY+i] == lastPlayerChar())
+                count++;
+            else
+                break;
+        }
+        for(int i = 1; lastMove-i>= 1 && lastMoveY-i >= 0;i++){
+            if(getCol(lastMove-i)[lastMoveY-i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
+        return count;
+    }
+    private int S()
+    {
+        int count = 1;
+        for(int i = 1; lastMoveY-i>= 0;i++){
+            if(getCol(lastMove)[lastMoveY-i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
+        return count;
+    }
+    private int EW()
+    {
+        int count = 1;
+        for(int i = 1; lastMove+i<= 7;i++){
+            if(getCol(lastMove+i)[lastMoveY] == lastPlayerChar())
+                count++;
+            else
+                break;
+        }
+        for(int i = 1; lastMove-i>= 0;i++){
+            if(getCol(lastMove-i)[lastMoveY] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
+        return count;
+    }
+    private int NWSE()
+    {
+        int count = 1;
+        for(int i = 1; lastMove-i>= 1 && lastMoveY+i <= 5;i++){
+            if(getCol(lastMove-i)[lastMoveY+i] == lastPlayerChar())
+                count++;
+            else
+                break;
+        }
+        for(int i = 1; lastMove+i<= 7 && lastMoveY-i >= 0;i++){
+            if(getCol(lastMove+i)[lastMoveY-i] == lastPlayerChar())
+                count++;
+            else
+                return count;
+        }
+        return count;
+    }
 
+/*
     private int NE()
     {
         int count = 0;
@@ -266,7 +329,7 @@ public class State {
         }
         return 0;
     }
-
+*/
     private int points(int count)
     {
         if(count == 1)
