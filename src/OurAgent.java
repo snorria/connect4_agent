@@ -55,9 +55,9 @@ public class OurAgent implements Agent
                     depth++;
                 }
             }
-            catch (Exception e)
+            catch (TimeOverExeption e)
             {
-                System.out.println("Move made: "+ move);
+                System.out.println("Exeption: " + e.getMessage() + "\nMove made: "+ move);
             }
 
             return "(DROP " + move + ")";
@@ -69,13 +69,13 @@ public class OurAgent implements Agent
     }
 
     private static int bestmove;
-    private int AlphaBetaNegaMax (int depth, State s, int alpha, int beta, boolean first) throws Exception
+    private int AlphaBetaNegaMax (int depth, State s, int alpha, int beta, boolean first) throws TimeOverExeption
     {
         long timeNow = System.nanoTime();
         System.out.println("TIME: "+(timeNow - startTime) +" > " + MAX_TIME );
         if((timeNow - startTime) > MAX_TIME)
         {
-            throw new Exception();
+            throw new TimeOverExeption("Time Over!");
         }
 
         if ( s.isGoal() || depth <= 0 )
@@ -102,7 +102,7 @@ public class OurAgent implements Agent
             if ( bestValue > alpha )
             {
                 alpha = bestValue; //adjust the lower bound
-                //if ( alpha >= beta ) break; //beta cutoff
+                if ( alpha >= beta ) break; //beta cutoff
             }
         }
 
