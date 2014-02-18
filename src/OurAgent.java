@@ -102,7 +102,7 @@ public class OurAgent implements Agent
             if ( bestValue > alpha )
             {
                 alpha = bestValue; //adjust the lower bound
-                if ( alpha >= beta ) break; //beta cutoff
+                //if ( alpha >= beta ) break; //beta cutoff
             }
         }
 
