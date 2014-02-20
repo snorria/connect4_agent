@@ -10,20 +10,29 @@ import java.util.List;
  */
 public class State {
     //These are split into many arrays so that we can use the columns from the last state without making a new array.
-    char[] col1 = new char[6];
-    char[] col2 = new char[6];
-    char[] col3 = new char[6];
-    char[] col4 = new char[6];
-    char[] col5 = new char[6];
-    char[] col6 = new char[6];
-    char[] col7 = new char[6];
-    boolean currentPlayer = true;
+    char[] col1;// = new char[6];
+    char[] col2;// = new char[6];
+    char[] col3;// = new char[6];
+    char[] col4;// = new char[6];
+    char[] col5;// = new char[6];
+    char[] col6;// = new char[6];
+    char[] col7;// = new char[6];
+    boolean currentPlayer;// = true;
     int lastMove; //the column that was dropped into, last move...
     int lastMoveY; //the row the disc of the last move landed in.
 
     public State()
     {
-
+        col1 = new char[6];
+        col2 = new char[6];
+        col3 = new char[6];
+        col4 = new char[6];
+        col5 = new char[6];
+        col6 = new char[6];
+        col7 = new char[6];
+        currentPlayer = true;
+        lastMove = 0; //the column that was dropped into, last move...
+        lastMoveY = 0; //the row the disc of the last move landed in.
     }
     //Copy constructor.
     public State(State copiedState)
